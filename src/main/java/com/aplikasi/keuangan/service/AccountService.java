@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -50,7 +50,7 @@ public class AccountService {
     public void deleteAccount(UUID id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
-        account.setDeletedAt(ZonedDateTime.now());
+        account.setDeletedAt(Instant.now());
         accountRepository.save(account);
     }
 

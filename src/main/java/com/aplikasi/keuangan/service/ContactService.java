@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -44,7 +44,7 @@ public class ContactService {
     public void deleteContact(UUID id) {
         Contact contact = contactRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contact not found"));
-        contact.setDeletedAt(ZonedDateTime.now());
+        contact.setDeletedAt(Instant.now());
         contactRepository.save(contact);
     }
 
