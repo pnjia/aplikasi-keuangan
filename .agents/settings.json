@@ -1,0 +1,6 @@
+{
+  "project_name": "Aplikasi Keuangan Backend API",
+  "framework": "Spring Boot 3.x",
+  "java_version": "17_or_21",
+  "allowed_tools": ["terminal_execution", "file_read_write"]
+}
