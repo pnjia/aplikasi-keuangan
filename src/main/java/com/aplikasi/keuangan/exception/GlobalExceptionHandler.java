@@ -13,6 +13,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleInternalServerError(Exception ex) {
+        ex.printStackTrace();
         ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
                 .timestamp(ZonedDateTime.now())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
