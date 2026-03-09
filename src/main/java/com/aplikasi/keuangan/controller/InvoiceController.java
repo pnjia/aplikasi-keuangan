@@ -9,6 +9,7 @@ import com.aplikasi.keuangan.repository.CompanyRoleRepository;
 import com.aplikasi.keuangan.repository.UserRepository;
 import com.aplikasi.keuangan.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -57,6 +58,7 @@ public class InvoiceController {
     // POST /api/v1/invoices — Membuat Tagihan Baru
     // ──────────────────────────────────────────────
 
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN', 'KASIR')")
     @PostMapping
     public ResponseEntity<InvoiceResponseDTO> createInvoice(@RequestBody InvoiceRequestDTO request) {
         // Set companyId dari context JWT, bukan dari input client
@@ -69,6 +71,7 @@ public class InvoiceController {
     // GET /api/v1/invoices — Daftar Tagihan (Paginasi)
     // ──────────────────────────────────────────────
 
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN', 'KASIR')")
     @GetMapping
     public ResponseEntity<Page<InvoiceResponseDTO>> getInvoices(
             @RequestParam(defaultValue = "0") int page,
@@ -82,6 +85,7 @@ public class InvoiceController {
     // PUT /api/v1/invoices/{id}/pay — Proses Pembayaran
     // ──────────────────────────────────────────────
 
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN')")
     @PutMapping("/{id}/pay")
     public ResponseEntity<InvoiceResponseDTO> payInvoice(
             @PathVariable UUID id,

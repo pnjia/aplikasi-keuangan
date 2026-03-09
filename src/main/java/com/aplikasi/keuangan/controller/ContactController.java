@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,12 +42,14 @@ public class ContactController {
         return roles.get(0).getCompanyId();
     }
 
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN', 'KASIR')")
     @PostMapping
     public ResponseEntity<ContactResponseDTO> createContact(@RequestBody ContactRequestDTO request) {
         request.setCompanyId(getCompanyIdFromCurrentUser());
         return new ResponseEntity<>(contactService.createContact(request), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN', 'KASIR')")
     @GetMapping
     public ResponseEntity<List<ContactResponseDTO>> getContacts() {
         UUID companyId = getCompanyIdFromCurrentUser();

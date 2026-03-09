@@ -33,12 +33,19 @@ public class CompanyController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    // Endpoint ini TIDAK menggunakan @PreAuthorize karena user baru yang baru register
+    // belum memiliki peran apapun. Setelah membuat perusahaan, user otomatis menjadi OWNER
+    // melalui logika di CompanyService.createCompany().
+    // Keamanan tetap terjaga karena endpoint ini dilindungi oleh .authenticated() di SecurityConfig.
     @PostMapping
     public ResponseEntity<CompanyResponse> createCompany(@RequestBody CompanyRequest request) {
         User user = getCurrentUser();
         return new ResponseEntity<>(companyService.createCompany(request, user.getId()), HttpStatus.CREATED);
     }
 
+    // Endpoint ini TIDAK menggunakan @PreAuthorize karena user baru yang belum punya
+    // perusahaan tetap harus bisa memanggil endpoint ini (akan mendapat daftar kosong).
+    // Keamanan tetap terjaga karena dilindungi oleh .authenticated() di SecurityConfig.
     @GetMapping
     public ResponseEntity<List<CompanyResponse>> getCompanies() {
         User user = getCurrentUser();
