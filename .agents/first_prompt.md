@@ -8,6 +8,8 @@ Halo. Kita akan memulai tahap pengembangan untuk proyek backend aplikasi keuanga
 
 .agents/rules/backend_rules.md
 
+.agents/database_schema.md
+
 Tolong proses semua dokumen tersebut sekarang. Setelah selesai membaca, berikan ringkasan singkat mengenai pemahamanmu tentang arsitektur, aturan keamanan, struktur folder, dan konsep pangkalan data proyek ini.
 
 Ingat, jangan menulis atau menghasilkan kode apa pun terlebih dahulu sampai saya mengonfirmasi pemahamanmu dan memberikan instruksi selanjutnya.
