@@ -4,12 +4,15 @@ import com.aplikasi.keuangan.dto.InvoiceItemDTO;
 import com.aplikasi.keuangan.dto.InvoiceRequestDTO;
 import com.aplikasi.keuangan.dto.InvoiceResponseDTO;
 import com.aplikasi.keuangan.dto.PaymentRequestDTO;
+import com.aplikasi.keuangan.entity.Contact;
+import com.aplikasi.keuangan.entity.ContactType;
 import com.aplikasi.keuangan.entity.Invoice;
 import com.aplikasi.keuangan.entity.InvoiceItem;
 import com.aplikasi.keuangan.entity.InvoiceStatus;
 import com.aplikasi.keuangan.entity.JournalEntry;
 import com.aplikasi.keuangan.entity.JournalLine;
 import com.aplikasi.keuangan.repository.AccountRepository;
+import com.aplikasi.keuangan.repository.ContactRepository;
 import com.aplikasi.keuangan.repository.InvoiceRepository;
 import com.aplikasi.keuangan.repository.JournalEntryRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final JournalEntryRepository journalEntryRepository;
     private final AccountRepository accountRepository;
+    private final ContactRepository contactRepository;
 
     // ──────────────────────────────────────────────
     // 1. Membuat Tagihan Baru (Create Invoice)
@@ -121,25 +125,54 @@ public class InvoiceService {
                 .description("Pembayaran tagihan: " + invoice.getInvoiceNumber())
                 .build();
 
-        // --- Langkah 5: Buat dua JournalLine (Debit dan Kredit) ---
+        // --- Langkah 4.5: Menentukan Tipe Jurnal berdasarkan Tipe Kontak ---
+        Contact contact = contactRepository.findById(invoice.getContactId())
+                .orElseThrow(() -> new RuntimeException("Kontak tidak ditemukan"));
+
+        JournalLine debitLine;
+        JournalLine creditLine;
         BigDecimal paymentAmount = invoice.getTotalAmount();
 
-        // Baris 1: DEBIT — Menambah saldo Kas/Bank di akun tujuan
-        JournalLine debitLine = JournalLine.builder()
-                .accountId(request.getAccountId())
-                .debitAmount(paymentAmount)
-                .creditAmount(BigDecimal.ZERO)
-                .build();
+        if (contact.getType() == ContactType.CUSTOMER) {
+            // CUSTOMER (Pelanggan) -> Invoice Penjualan
+            // Cash-basis: Kas/Bank Bertambah (DEBIT), Pendapatan Jasa Bertambah (KREDIT)
+            UUID pendapatanAccountId = accountRepository
+                    .findByCompanyIdAndAccountCode(invoice.getCompanyId(), "4-1001")
+                    .orElseThrow(() -> new RuntimeException("Akun Pendapatan Jasa (4-1001) tidak ditemukan."))
+                    .getId();
 
-        // Baris 2: KREDIT — Mencatat pendapatan (menggunakan contactId sebagai referensi akun pendapatan)
-        // Dalam praktik nyata, akun pendapatan ditentukan dari konfigurasi perusahaan.
-        // Untuk saat ini, sementara menggunakan contactId pada invoice sebagai placeholder akun kredit.
-        // TODO: Ganti dengan akun pendapatan spesifik dari konfigurasi perusahaan
-        JournalLine creditLine = JournalLine.builder()
-                .accountId(request.getAccountId()) // Sementara menggunakan akun yang sama
-                .debitAmount(BigDecimal.ZERO)
-                .creditAmount(paymentAmount)
-                .build();
+            debitLine = JournalLine.builder()
+                    .accountId(request.getAccountId()) // Kas/Bank
+                    .debitAmount(paymentAmount)
+                    .creditAmount(BigDecimal.ZERO)
+                    .build();
+
+            creditLine = JournalLine.builder()
+                    .accountId(pendapatanAccountId)    // Pendapatan Jasa
+                    .debitAmount(BigDecimal.ZERO)
+                    .creditAmount(paymentAmount)
+                    .build();
+
+        } else {
+            // VENDOR (Pemasok) -> Invoice Pembelian/Pengeluaran
+            // Cash-basis: Beban Operasional Bertambah (DEBIT), Kas/Bank Berkurang (KREDIT)
+            UUID bebanAccountId = accountRepository
+                    .findByCompanyIdAndAccountCode(invoice.getCompanyId(), "5-1001")
+                    .orElseThrow(() -> new RuntimeException("Akun Beban Operasional (5-1001) tidak ditemukan."))
+                    .getId();
+
+            debitLine = JournalLine.builder()
+                    .accountId(bebanAccountId)         // Beban Operasional
+                    .debitAmount(paymentAmount)
+                    .creditAmount(BigDecimal.ZERO)
+                    .build();
+
+            creditLine = JournalLine.builder()
+                    .accountId(request.getAccountId()) // Kas/Bank
+                    .debitAmount(BigDecimal.ZERO)
+                    .creditAmount(paymentAmount)
+                    .build();
+        }
 
         // --- Langkah 6: Validasi keseimbangan Debit == Kredit ---
         if (debitLine.getDebitAmount().compareTo(creditLine.getCreditAmount()) != 0) {
