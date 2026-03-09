@@ -1,0 +1,284 @@
+### Pengujian Titik Akhir API Manajemen Transaksi (Invoice)
+### PENTING:
+###   - Ganti {{token}} dengan token JWT dari hasil login
+###   - Ganti {{contactId}} dengan UUID kontak dari hasil test_contact.http
+###   - Ganti {{invoiceId}} dengan UUID invoice dari hasil POST di bawah
+###   - Ganti {{accountId}} dengan UUID akun Kas/Bank dari hasil test_account.http
+
+# 1. Membuat Tagihan Baru (Invoice)
+# Akses: OWNER, ADMIN, KASIR
+# CATATAN: contactId harus diambil dari response GET /api/v1/contacts
+POST http://localhost:8080/api/v1/invoices
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
+  "invoiceNumber": "INV-2024-001",
+  "issueDate": "2024-03-01T00:00:00Z",
+  "dueDate": "2024-03-31T00:00:00Z",
+  "status": "DRAFT",
+  "items": [
+    {
+      "description": "Jasa Pembuatan Website Company Profile",
+      "quantity": 1,
+      "unitPrice": 15000000.0000
+    },
+    {
+      "description": "Jasa Desain Logo dan Branding",
+      "quantity": 1,
+      "unitPrice": 5000000.0000
+    },
+    {
+      "description": "Biaya Hosting & Domain 1 Tahun",
+      "quantity": 2,
+      "unitPrice": 1500000.0000
+    }
+  ]
+}
+
+###
+
+# 2. Membuat Tagihan Kedua (untuk variasi data testing)
+# Akses: OWNER, ADMIN, KASIR
+POST http://localhost:8080/api/v1/invoices
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
+  "invoiceNumber": "INV-2024-002",
+  "issueDate": "2024-03-05T00:00:00Z",
+  "dueDate": "2024-04-05T00:00:00Z",
+  "status": "SENT",
+  "items": [
+    {
+      "description": "Konsultasi IT Bulanan",
+      "quantity": 1,
+      "unitPrice": 8000000.0000
+    }
+  ]
+}
+
+###
+
+# 3. Mengambil Daftar Tagihan (Paginasi)
+# Akses: OWNER, ADMIN, KASIR
+# Gunakan query param page dan size untuk kontrol paginasi
+GET http://localhost:8080/api/v1/invoices?page=0&size=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+###
+
+# 4. Memproses Pembayaran Tagihan (Pay Invoice)
+# Akses: Hanya OWNER, ADMIN
+# PENTING:
+#   - Ganti {{invoiceId}} dengan UUID invoice dari response POST di atas
+#   - Ganti {{accountId}} dengan UUID akun Kas atau Bank dari response GET /api/v1/accounts
+#   - Endpoint ini akan OTOMATIS membuat jurnal ganda (double-entry) di database
+PUT http://localhost:8080/api/v1/invoices/1f86e5f0-6b17-48bb-827b-a93179ff7a27/pay
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "amount": 23000000.0000,
+  "accountId": "f7443618-d1d7-4068-a4e0-10f163e5ea64"
+}
+
+###
+
+# ══════════════════════════════════════════════
+# TRANSAKSI BARU — Untuk Variasi Data Laporan
+# ══════════════════════════════════════════════
+
+# 5. Invoice Baru: Jasa Maintenance Server
+# Kontak: CV Pelanggan Setia
+POST http://localhost:8080/api/v1/invoices
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
+  "invoiceNumber": "INV-2024-003",
+  "issueDate": "2024-04-01T00:00:00Z",
+  "dueDate": "2024-04-30T00:00:00Z",
+  "status": "SENT",
+  "items": [
+    {
+      "description": "Maintenance Server Bulanan - April",
+      "quantity": 1,
+      "unitPrice": 5000000.0000
+    },
+    {
+      "description": "Upgrade RAM Server 32GB",
+      "quantity": 2,
+      "unitPrice": 2500000.0000
+    }
+  ]
+}
+
+###
+
+# 6. Invoice Baru: Jasa Pelatihan IT
+# Kontak: PT Supplier Utama
+POST http://localhost:8080/api/v1/invoices
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
+  "invoiceNumber": "INV-2024-004",
+  "issueDate": "2024-04-10T00:00:00Z",
+  "dueDate": "2024-05-10T00:00:00Z",
+  "status": "DRAFT",
+  "items": [
+    {
+      "description": "Pelatihan Keamanan Jaringan (3 Hari)",
+      "quantity": 1,
+      "unitPrice": 12000000.0000
+    }
+  ]
+}
+
+###
+
+# 7. Invoice Baru: Proyek Pengembangan Aplikasi Mobile
+# Kontak: CV Pelanggan Setia
+POST http://localhost:8080/api/v1/invoices
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
+  "invoiceNumber": "INV-2024-005",
+  "issueDate": "2024-05-01T00:00:00Z",
+  "dueDate": "2024-06-01T00:00:00Z",
+  "status": "SENT",
+  "items": [
+    {
+      "description": "Pengembangan Aplikasi Android",
+      "quantity": 1,
+      "unitPrice": 25000000.0000
+    },
+    {
+      "description": "Pengembangan Aplikasi iOS",
+      "quantity": 1,
+      "unitPrice": 25000000.0000
+    },
+    {
+      "description": "UI/UX Design Mobile App",
+      "quantity": 1,
+      "unitPrice": 8000000.0000
+    }
+  ]
+}
+
+###
+
+# ══════════════════════════════════════════════
+# PEMBAYARAN INVOICE BARU
+# ══════════════════════════════════════════════
+# PENTING: Jalankan nomor 5, 6, 7 dulu untuk membuat invoice baru.
+#          Kemudian ambil invoiceId dari response masing-masing.
+#
+# Ganti {{invoiceId5}} dan {{invoiceId6}} di bawah dengan UUID
+# yang dikembalikan oleh response POST di atas.
+
+# 8. Bayar Invoice INV-2024-003 (Rp10.000.000) via Kas
+# GANTI invoiceId di bawah dengan ID dari response nomor 5!
+PUT http://localhost:8080/api/v1/invoices/df8ff68f-ccf0-4981-a6ff-0f86194ae453/pay
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "amount": 10000000.0000,
+  "accountId": "f7443618-d1d7-4068-a4e0-10f163e5ea64"
+}
+
+###
+
+# 9. Bayar Invoice INV-2024-004 (Rp12.000.000) via Bank BCA
+# GANTI invoiceId di bawah dengan ID dari response nomor 6!
+PUT http://localhost:8080/api/v1/invoices/2bdd26a4-3bdc-4ca5-bd35-e56fda3226c2/pay
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "amount": 12000000.0000,
+  "accountId": "de75301a-6b46-4170-b5bc-729f4ccd1fdb"
+}
+
+###
+
+# ══════════════════════════════════════════════
+# SKENARIO LABA RUGI (PROFIT AND LOSS)
+# ══════════════════════════════════════════════
+# Sekarang sistem otomatis mendeteksi Tipe Kontak:
+# - CUSTOMER -> Mencatat "Pendapatan Jasa" (REVENUE)
+# - VENDOR   -> Mencatat "Beban Operasional" (EXPENSE)
+
+# 10. Invoice Konsultasi (Dari CUSTOMER) -> PENDAPATAN
+POST http://localhost:8080/api/v1/invoices
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
+  "invoiceNumber": "INV-2024-006",
+  "issueDate": "2024-06-01T00:00:00Z",
+  "dueDate": "2024-06-30T00:00:00Z",
+  "status": "SENT",
+  "items": [
+    {
+      "description": "Pendapatan Jasa Konsultasi",
+      "quantity": 1,
+      "unitPrice": 45000000.0000
+    }
+  ]
+}
+
+###
+
+# 11. Invoice Lisensi (Kepada VENDOR) -> BEBAN
+POST http://localhost:8080/api/v1/invoices
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
+  "invoiceNumber": "BILL-2024-001",
+  "issueDate": "2024-06-05T00:00:00Z",
+  "dueDate": "2024-06-20T00:00:00Z",
+  "status": "SENT",
+  "items": [
+    {
+      "description": "Beban Langganan Software Tahunan",
+      "quantity": 1,
+      "unitPrice": 7500000.0000
+    }
+  ]
+}
+
+###
+
+# 12. Bayar Invoice PENDAPATAN (Ganti {{id}} dengan ID nomor 10!)
+PUT http://localhost:8080/api/v1/invoices/bb799375-3ece-45ba-a69f-65e76de238f6/pay
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "amount": 45000000.0000,
+  "accountId": "f7443618-d1d7-4068-a4e0-10f163e5ea64"
+}
+
+###
+
+# 13. Bayar Invoice BEBAN (Ganti {{id}} dengan ID nomor 11!)
+PUT http://localhost:8080/api/v1/invoices/dbc48451-9b97-4661-9146-42b826021736/pay
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "amount": 7500000.0000,
+  "accountId": "de75301a-6b46-4170-b5bc-729f4ccd1fdb"
+}

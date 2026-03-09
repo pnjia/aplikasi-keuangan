@@ -1,0 +1,71 @@
+### Pengujian Titik Akhir API Modul Pelaporan Keuangan
+### PENTING:
+###   - Ganti {{token}} dengan token JWT dari hasil login
+###   - Ganti {{accountId}} dengan UUID akun dari response GET /api/v1/accounts
+###   - Endpoint pelaporan HANYA bisa diakses oleh OWNER dan ADMIN
+###   - Semua endpoint wajib menggunakan parameter startDate dan endDate (format: YYYY-MM-DD)
+
+# 1. Jurnal Umum (General Journal)
+# Menampilkan seluruh entri jurnal beserta baris debit/kredit dalam rentang waktu
+# Akses: OWNER, ADMIN
+GET http://localhost:8080/api/v1/reports/general-journal?startDate=2024-01-01&endDate=2026-12-31
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+###
+
+# 2. Buku Besar (General Ledger) untuk Satu Akun Tertentu
+# Menampilkan riwayat pergerakan satu akun dengan saldo berjalan (running balance)
+# Akses: OWNER, ADMIN
+# PENTING: Ganti {{accountId}} dengan UUID akun yang ingin dilihat (misal: akun Kas)
+GET http://localhost:8080/api/v1/reports/general-ledger/f7443618-d1d7-4068-a4e0-10f163e5ea64?startDate=2024-01-01&endDate=2026-12-31
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+###
+
+# 3. Neraca Saldo (Trial Balance)
+# Menampilkan ringkasan total Debit dan Kredit per akun untuk validasi keseimbangan
+# Akses: OWNER, ADMIN
+GET http://localhost:8080/api/v1/reports/trial-balance?startDate=2024-01-01&endDate=2026-12-31
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+###
+
+# 4. Laba Rugi (Profit & Loss / Income Statement)
+# Menghitung: Laba Bersih = Total Pendapatan (REVENUE) - Total Beban (EXPENSE)
+# Akses: OWNER, ADMIN
+GET http://localhost:8080/api/v1/reports/profit-and-loss?startDate=2024-01-01&endDate=2026-12-31
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+###
+
+# 5. Neraca (Balance Sheet)
+# Rumus: Aset = Liabilitas + Ekuitas
+# Menampilkan posisi keuangan perusahaan pada periode tertentu
+# Akses: OWNER, ADMIN
+GET http://localhost:8080/api/v1/reports/balance-sheet?startDate=2024-01-01&endDate=2026-12-31
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+###
+
+# 6. Arus Kas (Cash Flow)
+# Memfilter pergerakan uang khusus pada akun Kas atau Bank
+# Menghitung: Net Cash Flow = Total Kas Masuk - Total Kas Keluar
+# Akses: OWNER, ADMIN
+GET http://localhost:8080/api/v1/reports/cash-flow?startDate=2024-01-01&endDate=2026-12-31
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+###
+
+# 7. Ekspor Laba Rugi (Format PDF)
+# Menghasilkan fail (file) dokumen PDF berisi tabel Laba Rugi
+# Akses: OWNER, ADMIN
+GET http://localhost:8080/api/v1/reports/profit-and-loss?startDate=2024-01-01&endDate=2026-12-31&format=pdf
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+###
+
+# 8. Ekspor Laba Rugi (Format Excel)
+# Menghasilkan fail (file) lembar kerja XLSX berisi tabel Laba Rugi
+# Akses: OWNER, ADMIN
+GET http://localhost:8080/api/v1/reports/profit-and-loss?startDate=2024-01-01&endDate=2026-12-31&format=excel
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA

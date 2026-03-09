@@ -1,0 +1,107 @@
+### Pengujian Titik Akhir API Manajemen Akun (Chart of Accounts)
+### PENTING: Ganti {{token}} dengan token JWT dari hasil login di test_auth.http
+### companyId diambil otomatis dari JWT (tidak perlu diisi di body)
+
+# 1. Membuat Akun — Kas (ASSET)
+# Akses: OWNER, ADMIN
+POST http://localhost:8080/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "accountCode": "1-1001",
+  "accountName": "Kas",
+  "accountType": "ASSET"
+}
+
+###
+
+# 2. Membuat Akun — Bank BCA (ASSET)
+# Akses: OWNER, ADMIN
+POST http://localhost:8080/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "accountCode": "1-1002",
+  "accountName": "Bank BCA",
+  "accountType": "ASSET"
+}
+
+###
+
+# 3. Membuat Akun — Piutang Usaha (ASSET)
+# Akses: OWNER, ADMIN
+POST http://localhost:8080/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "accountCode": "1-2001",
+  "accountName": "Piutang Usaha",
+  "accountType": "ASSET"
+}
+
+###
+
+# 4. Membuat Akun — Utang Usaha (LIABILITY)
+# Akses: OWNER, ADMIN
+POST http://localhost:8080/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "accountCode": "2-1001",
+  "accountName": "Utang Usaha",
+  "accountType": "LIABILITY"
+}
+
+###
+
+# 5. Membuat Akun — Modal Pemilik (EQUITY)
+# Akses: OWNER, ADMIN
+POST http://localhost:8080/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "accountCode": "3-1001",
+  "accountName": "Modal Pemilik",
+  "accountType": "EQUITY"
+}
+
+###
+
+# 6. Membuat Akun — Pendapatan Jasa (REVENUE)
+# Akses: OWNER, ADMIN
+POST http://localhost:8080/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "accountCode": "4-1001",
+  "accountName": "Pendapatan Jasa",
+  "accountType": "REVENUE"
+}
+
+###
+
+# 7. Membuat Akun — Beban Operasional (EXPENSE)
+# Akses: OWNER, ADMIN
+POST http://localhost:8080/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "accountCode": "5-1001",
+  "accountName": "Beban Operasional",
+  "accountType": "EXPENSE"
+}
+
+###
+
+# 8. Melihat Daftar Seluruh Akun Perusahaan
+# Akses: OWNER, ADMIN, KASIR
+GET http://localhost:8080/api/v1/accounts
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+

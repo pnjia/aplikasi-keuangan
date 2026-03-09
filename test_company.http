@@ -1,0 +1,22 @@
+### Pengujian Titik Akhir API Manajemen Perusahaan (Tenant)
+### PENTING: Ganti {{token}} dengan token JWT dari hasil login di test_auth.http
+
+# 1. Membuat Profil Perusahaan Baru
+# Akses: Hanya OWNER
+POST http://localhost:8080/api/v1/companies
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "name": "PT Maju Sejahtera",
+  "address": "Jl. Jendral Sudirman No. 10, Jakarta Selatan",
+  "taxNumber": "01.234.567.8-123.000"
+}
+
+###
+
+# 2. Melihat Daftar Perusahaan Pengguna
+# Akses: OWNER, ADMIN, KASIR
+GET http://localhost:8080/api/v1/companies
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+

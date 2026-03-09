@@ -1,0 +1,38 @@
+### Pengujian Titik Akhir API Manajemen Kontak (Customer & Vendor)
+### PENTING: Ganti {{token}} dengan token JWT dari hasil login di test_auth.http
+### companyId diambil otomatis dari JWT (tidak perlu diisi di body)
+
+# 1. Membuat Kontak Baru — Tipe CUSTOMER
+# Akses: OWNER, ADMIN, KASIR
+POST http://localhost:8080/api/v1/contacts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "type": "CUSTOMER",
+  "name": "CV Pelanggan Setia",
+  "phone": "081234567890",
+  "email": "pelanggan@setia.com"
+}
+
+###
+
+# 2. Membuat Kontak Baru — Tipe VENDOR
+# Akses: OWNER, ADMIN, KASIR
+POST http://localhost:8080/api/v1/contacts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+
+{
+  "type": "VENDOR",
+  "name": "PT Supplier Utama",
+  "phone": "089876543210",
+  "email": "supplier@utama.com"
+}
+
+###
+
+# 3. Melihat Daftar Kontak Perusahaan
+# Akses: OWNER, ADMIN, KASIR
+GET http://localhost:8080/api/v1/contacts
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
