@@ -6,6 +6,16 @@ Kamu wajib mematuhi rancangan titik akhir (endpoint) di bawah ini. Dilarang kera
 
 - `POST /api/v1/auth/register` (Mendaftarkan pengguna baru)
 - `POST /api/v1/auth/login` (Masuk pengguna, mengembalikan token JWT)
+- `POST /api/v1/auth/logout` (Keluar pengguna, membersihkan memori autentikasi)
+  - **Header Wajib**: `Authorization: Bearer <Token_JWT>`
+  - **Sukses Respon (200 OK)**:
+    ```json
+    {
+      "timestamp": "2024-03-11T00:00:00Z",
+      "status": 200,
+      "message": "Logout berhasil"
+    }
+    ```
 
 ## B. Manajemen Perusahaan (Tenant)
 

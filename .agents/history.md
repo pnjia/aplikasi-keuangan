@@ -27,3 +27,14 @@
 - Pembuatan DTO dan fungsionalitas CRUD di _Service_ dengan metode penghapusan eksklusif memanipulasi riwayat tanggal `deletedAt` saja (_Soft-Delete_).
 - Penambahan filter `findByCompanyIdAndDeletedAtIsNull` otomatis di layer Repositori.
 - Implementasi lapis keamanan _Request Context_ di level pengontrol `ContactController` dan `AccountController` untuk memisahkan data akses multi-tenant berdasarkan identitas klaim JWT.
+
+## 11 Maret 2026
+
+### Fase 5: Keamanan Lanjutan (Logout & Token Blacklist)
+
+- Pembuatan titik akhir `POST /api/v1/auth/logout`.
+- Implementasi mekanisme Token Blacklist menggunakan PostgreSQL untuk mengatasi celah keamanan pada sistem JWT stateless.
+- Pembuatan entitas dan repositori `BlacklistedToken`.
+- Ekstraksi waktu kedaluwarsa token JWT (`expiresAt`) di `JwtUtil` untuk digunakan pada `AuthService`.
+- Penambahan filter di `JwtAuthenticationFilter` untuk mencegat dan menolak token dari daftar hitam sebelum tahap validasi utama dengan pengembalian status `401 Unauthorized`.
+- Pembaruan spesifikasi API `.agents/api_spesification.md` dan testing script di `test_auth.http`.
