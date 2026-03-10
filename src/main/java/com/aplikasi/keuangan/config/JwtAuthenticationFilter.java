@@ -2,6 +2,7 @@ package com.aplikasi.keuangan.config;
 
 import com.aplikasi.keuangan.entity.CompanyRole;
 import com.aplikasi.keuangan.entity.User;
+import com.aplikasi.keuangan.repository.BlacklistedTokenRepository;
 import com.aplikasi.keuangan.repository.CompanyRoleRepository;
 import com.aplikasi.keuangan.repository.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -27,10 +28,11 @@ import java.util.Optional;
  *
  * Tugas filter ini:
  * 1. Membaca token JWT dari header "Authorization: Bearer <token>"
- * 2. Memvalidasi token menggunakan JwtUtil
- * 3. Mengambil email pengguna dari token
- * 4. Mengambil peran (OWNER/ADMIN/KASIR) dari tabel company_roles
- * 5. Menanamkan Authentication + Authorities ke SecurityContext
+ * 2. Mengecek apakah token ada di daftar hitam (blacklisted_tokens)
+ * 3. Memvalidasi token menggunakan JwtUtil
+ * 4. Mengambil email pengguna dari token
+ * 5. Mengambil peran (OWNER/ADMIN/KASIR) dari tabel company_roles
+ * 6. Menanamkan Authentication + Authorities ke SecurityContext
  *    agar @PreAuthorize dapat bekerja dengan benar
  */
 @Slf4j
@@ -41,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final CompanyRoleRepository companyRoleRepository;
+    private final BlacklistedTokenRepository blacklistedTokenRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -50,32 +53,48 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String jwt = extractTokenFromHeader(request);
 
-            if (jwt != null && jwtUtil.validateToken(jwt)) {
-                String email = jwtUtil.getUserEmailFromToken(jwt);
+            if (jwt != null) {
+                // ATURAN MUTLAK: Cek daftar hitam SEBELUM validasi token
+                if (blacklistedTokenRepository.existsByToken(jwt)) {
+                    log.warn("Token ditolak: token sudah ada di daftar hitam (blacklisted)");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setContentType("application/json");
+                    response.getWriter().write(
+                            "{\"timestamp\":\"" + java.time.ZonedDateTime.now() + "\","
+                          + "\"status\":401,"
+                          + "\"error\":\"Unauthorized\","
+                          + "\"message\":\"Token sudah tidak valid. Silakan login kembali.\"}"
+                    );
+                    return; // Hentikan filter chain, jangan lanjut
+                }
 
-                Optional<User> userOptional = userRepository.findByEmail(email);
+                if (jwtUtil.validateToken(jwt)) {
+                    String email = jwtUtil.getUserEmailFromToken(jwt);
 
-                if (userOptional.isPresent()) {
-                    User user = userOptional.get();
+                    Optional<User> userOptional = userRepository.findByEmail(email);
 
-                    // Ambil semua peran pengguna dari tabel company_roles
-                    List<CompanyRole> roles = companyRoleRepository.findByUserId(user.getId());
+                    if (userOptional.isPresent()) {
+                        User user = userOptional.get();
 
-                    // Konversi peran menjadi GrantedAuthority untuk @PreAuthorize
-                    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    for (CompanyRole role : roles) {
-                        authorities.add(new SimpleGrantedAuthority(role.getRoleName().name()));
+                        // Ambil semua peran pengguna dari tabel company_roles
+                        List<CompanyRole> roles = companyRoleRepository.findByUserId(user.getId());
+
+                        // Konversi peran menjadi GrantedAuthority untuk @PreAuthorize
+                        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                        for (CompanyRole role : roles) {
+                            authorities.add(new SimpleGrantedAuthority(role.getRoleName().name()));
+                        }
+
+                        // Buat objek autentikasi
+                        UsernamePasswordAuthenticationToken authentication =
+                                new UsernamePasswordAuthenticationToken(email, null, authorities);
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                        // Tanamkan ke SecurityContext
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                        log.debug("Authenticated user: {} with roles: {}", email, authorities);
                     }
-
-                    // Buat objek autentikasi
-                    UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(email, null, authorities);
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                    // Tanamkan ke SecurityContext
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                    log.debug("Authenticated user: {} with roles: {}", email, authorities);
                 }
             }
         } catch (Exception e) {
@@ -98,3 +117,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 }
+

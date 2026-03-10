@@ -3,7 +3,10 @@ package com.aplikasi.keuangan.controller;
 import com.aplikasi.keuangan.dto.LoginRequest;
 import com.aplikasi.keuangan.dto.RegisterRequest;
 import com.aplikasi.keuangan.dto.TokenResponse;
+import com.aplikasi.keuangan.dto.ErrorResponseDTO;
 import com.aplikasi.keuangan.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import java.time.ZonedDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,4 +32,20 @@ public class AuthController {
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ErrorResponseDTO> logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            authService.logout(token);
+        }
+        ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .timestamp(ZonedDateTime.now())
+                .status(HttpStatus.OK.value())
+                .message("Logout berhasil")
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }
+
