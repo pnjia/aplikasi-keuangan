@@ -10,7 +10,7 @@
 # CATATAN: contactId harus diambil dari response GET /api/v1/contacts
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
@@ -43,7 +43,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN, KASIR
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
@@ -66,7 +66,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN, KASIR
 # Gunakan query param page dan size untuk kontrol paginasi
 GET http://localhost:8080/api/v1/invoices?page=0&size=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 ###
 
@@ -78,7 +78,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 #   - Endpoint ini akan OTOMATIS membuat jurnal ganda (double-entry) di database
 PUT http://localhost:8080/api/v1/invoices/1f86e5f0-6b17-48bb-827b-a93179ff7a27/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "amount": 23000000.0000,
@@ -95,7 +95,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Kontak: CV Pelanggan Setia
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
@@ -123,7 +123,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Kontak: PT Supplier Utama
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
@@ -146,7 +146,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Kontak: CV Pelanggan Setia
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
@@ -188,7 +188,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # GANTI invoiceId di bawah dengan ID dari response nomor 5!
 PUT http://localhost:8080/api/v1/invoices/df8ff68f-ccf0-4981-a6ff-0f86194ae453/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "amount": 10000000.0000,
@@ -201,7 +201,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # GANTI invoiceId di bawah dengan ID dari response nomor 6!
 PUT http://localhost:8080/api/v1/invoices/2bdd26a4-3bdc-4ca5-bd35-e56fda3226c2/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "amount": 12000000.0000,
@@ -220,7 +220,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 10. Invoice Konsultasi (Dari CUSTOMER) -> PENDAPATAN
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
@@ -242,7 +242,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 11. Invoice Lisensi (Kepada VENDOR) -> BEBAN
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
@@ -264,7 +264,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 12. Bayar Invoice PENDAPATAN (Ganti {{id}} dengan ID nomor 10!)
 PUT http://localhost:8080/api/v1/invoices/bb799375-3ece-45ba-a69f-65e76de238f6/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "amount": 45000000.0000,
@@ -276,7 +276,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 13. Bayar Invoice BEBAN (Ganti {{id}} dengan ID nomor 11!)
 PUT http://localhost:8080/api/v1/invoices/dbc48451-9b97-4661-9146-42b826021736/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "amount": 7500000.0000,

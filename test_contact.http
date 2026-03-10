@@ -6,7 +6,7 @@
 # Akses: OWNER, ADMIN, KASIR
 POST http://localhost:8080/api/v1/contacts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "type": "CUSTOMER",
@@ -21,7 +21,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN, KASIR
 POST http://localhost:8080/api/v1/contacts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
 
 {
   "type": "VENDOR",
@@ -35,4 +35,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 3. Melihat Daftar Kontak Perusahaan
 # Akses: OWNER, ADMIN, KASIR
 GET http://localhost:8080/api/v1/contacts
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
