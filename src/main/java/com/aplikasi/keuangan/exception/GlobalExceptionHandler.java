@@ -34,6 +34,23 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Menangani error akses data (seperti duplikasi hasil query).
+     */
+    @ExceptionHandler(org.springframework.dao.DataAccessException.class)
+    public ResponseEntity<ErrorResponseDTO> handleDataAccessException(org.springframework.dao.DataAccessException ex) {
+        log.error("Data access error: ", ex);
+
+        ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
+                .timestamp(ZonedDateTime.now())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                .message("Terjadi kesalahan pada pemrosesan database. Harap hubungi administrator.")
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * Menangani error akses ditolak (AccessDeniedException).
      * Dikembalikan saat @PreAuthorize gagal mencocokkan peran pengguna.
      */
