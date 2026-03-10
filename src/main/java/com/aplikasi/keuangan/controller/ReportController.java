@@ -88,13 +88,13 @@ public class ReportController {
         if ("excel".equalsIgnoreCase(format)) {
             byte[] file = excelExportService.generateGeneralJournalExcel(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Jurnal_Umum_" + startDate + "_sd_" + endDate + ".xlsx\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Jurnal_Umum_" + startDate + "_sd_" + endDate + ".xlsx")
                     .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                     .body(file);
         } else if ("pdf".equalsIgnoreCase(format)) {
             byte[] file = pdfExportService.generateGeneralJournalPdf(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Jurnal_Umum_" + startDate + "_sd_" + endDate + ".pdf\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Jurnal_Umum_" + startDate + "_sd_" + endDate + ".pdf")
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(file);
         }
@@ -120,13 +120,13 @@ public class ReportController {
         if ("excel".equalsIgnoreCase(format)) {
             byte[] file = excelExportService.generateGeneralLedgerExcel(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Buku_Besar_" + data.getAccountCode() + ".xlsx\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Buku_Besar_" + data.getAccountCode() + ".xlsx")
                     .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                     .body(file);
         } else if ("pdf".equalsIgnoreCase(format)) {
             byte[] file = pdfExportService.generateGeneralLedgerPdf(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Buku_Besar_" + data.getAccountCode() + ".pdf\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Buku_Besar_" + data.getAccountCode() + ".pdf")
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(file);
         }
@@ -151,13 +151,13 @@ public class ReportController {
         if ("excel".equalsIgnoreCase(format)) {
             byte[] file = excelExportService.generateTrialBalanceExcel(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Neraca_Saldo_" + endDate + ".xlsx\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Neraca_Saldo_" + endDate + ".xlsx")
                     .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                     .body(file);
         } else if ("pdf".equalsIgnoreCase(format)) {
             byte[] file = pdfExportService.generateTrialBalancePdf(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Neraca_Saldo_" + endDate + ".pdf\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Neraca_Saldo_" + endDate + ".pdf")
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(file);
         }
@@ -182,13 +182,13 @@ public class ReportController {
         if ("excel".equalsIgnoreCase(format)) {
             byte[] file = excelExportService.generateProfitAndLossExcel(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Laba_Rugi_" + startDate + "_sd_" + endDate + ".xlsx\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Laba_Rugi_" + startDate + "_sd_" + endDate + ".xlsx")
                     .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                     .body(file);
         } else if ("pdf".equalsIgnoreCase(format)) {
             byte[] file = pdfExportService.generateProfitAndLossPdf(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Laba_Rugi_" + startDate + "_sd_" + endDate + ".pdf\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Laba_Rugi_" + startDate + "_sd_" + endDate + ".pdf")
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(file);
         }
@@ -213,13 +213,13 @@ public class ReportController {
         if ("excel".equalsIgnoreCase(format)) {
             byte[] file = excelExportService.generateBalanceSheetExcel(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Neraca_" + endDate + ".xlsx\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Neraca_" + endDate + ".xlsx")
                     .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                     .body(file);
         } else if ("pdf".equalsIgnoreCase(format)) {
             byte[] file = pdfExportService.generateBalanceSheetPdf(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Neraca_" + endDate + ".pdf\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Neraca_" + endDate + ".pdf")
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(file);
         }
@@ -244,13 +244,13 @@ public class ReportController {
         if ("excel".equalsIgnoreCase(format)) {
             byte[] file = excelExportService.generateCashFlowExcel(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Arus_Kas_" + startDate + "_sd_" + endDate + ".xlsx\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Arus_Kas_" + startDate + "_sd_" + endDate + ".xlsx")
                     .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                     .body(file);
         } else if ("pdf".equalsIgnoreCase(format)) {
             byte[] file = pdfExportService.generateCashFlowPdf(data);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Arus_Kas_" + startDate + "_sd_" + endDate + ".pdf\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Arus_Kas_" + startDate + "_sd_" + endDate + ".pdf")
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(file);
         }
