@@ -14,7 +14,8 @@ import java.util.UUID;
 /**
  * DTO respons Neraca (Balance Sheet).
  * Rumus: Aset = Liabilitas + Ekuitas.
- * Menyajikan ringkasan posisi keuangan perusahaan pada periode tertentu.
+ * Menyajikan ringkasan posisi keuangan perusahaan pada periode tertentu,
+ * dikelompokkan menjadi 3 blok utama: Aset, Kewajiban, dan Ekuitas.
  */
 @Getter
 @Setter
@@ -25,12 +26,21 @@ public class BalanceSheetDTO {
 
     private Instant startDate;
     private Instant endDate;
-    private BigDecimal totalAsset;
-    private BigDecimal totalLiability;
-    private BigDecimal totalEquity;
+
+    // ── Blok Aset ──
     private List<BalanceSheetLineDTO> assetAccounts;
+    private BigDecimal totalAssets;
+
+    // ── Blok Kewajiban ──
     private List<BalanceSheetLineDTO> liabilityAccounts;
+    private BigDecimal totalLiabilities;
+
+    // ── Blok Ekuitas (termasuk Laba Berjalan) ──
     private List<BalanceSheetLineDTO> equityAccounts;
+    private BigDecimal totalEquities;
+
+    // ── Grand Total: Kewajiban + Ekuitas ──
+    private BigDecimal totalLiabilitiesAndEquities;
 
     @Getter
     @Setter

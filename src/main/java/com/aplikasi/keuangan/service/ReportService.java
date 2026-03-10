@@ -254,6 +254,7 @@ public class ReportService {
     // ══════════════════════════════════════════════
     // 5. NERACA (Balance Sheet)
     //    Rumus: Aset = Liabilitas + Ekuitas
+    //    Ekuitas mencakup Laba Berjalan (Net Income)
     // ══════════════════════════════════════════════
 
     @Transactional(readOnly = true)
@@ -266,9 +267,13 @@ public class ReportService {
         List<BalanceSheetDTO.BalanceSheetLineDTO> liabilityAccounts = new ArrayList<>();
         List<BalanceSheetDTO.BalanceSheetLineDTO> equityAccounts = new ArrayList<>();
 
-        BigDecimal totalAsset = BigDecimal.ZERO;
-        BigDecimal totalLiability = BigDecimal.ZERO;
-        BigDecimal totalEquity = BigDecimal.ZERO;
+        BigDecimal totalAssets = BigDecimal.ZERO;
+        BigDecimal totalLiabilities = BigDecimal.ZERO;
+        BigDecimal totalEquities = BigDecimal.ZERO;
+
+        // Variabel untuk menghitung Laba Berjalan (Net Income) langsung di sini
+        BigDecimal totalRevenue = BigDecimal.ZERO;
+        BigDecimal totalExpense = BigDecimal.ZERO;
 
         for (Object[] row : rawData) {
             String accountType = toStringValue(row[3]);
@@ -279,36 +284,60 @@ public class ReportService {
                 case "ASSET" -> {
                     // Saldo Aset = Debit - Kredit (normal saldo debit)
                     BigDecimal balance = debit.subtract(credit);
-                    totalAsset = totalAsset.add(balance);
+                    totalAssets = totalAssets.add(balance);
                     assetAccounts.add(buildBalanceSheetLine(row, balance));
                 }
                 case "LIABILITY" -> {
-                    // Saldo Liabilitas = Kredit - Debit (normal saldo kredit)
+                    // Saldo Kewajiban = Kredit - Debit (normal saldo kredit)
                     BigDecimal balance = credit.subtract(debit);
-                    totalLiability = totalLiability.add(balance);
+                    totalLiabilities = totalLiabilities.add(balance);
                     liabilityAccounts.add(buildBalanceSheetLine(row, balance));
                 }
                 case "EQUITY" -> {
                     // Saldo Ekuitas = Kredit - Debit (normal saldo kredit)
                     BigDecimal balance = credit.subtract(debit);
-                    totalEquity = totalEquity.add(balance);
+                    totalEquities = totalEquities.add(balance);
                     equityAccounts.add(buildBalanceSheetLine(row, balance));
                 }
+                case "REVENUE" -> {
+                    // Pendapatan: Kredit - Debit → akan menjadi komponen Net Income
+                    totalRevenue = totalRevenue.add(credit.subtract(debit));
+                }
+                case "EXPENSE" -> {
+                    // Beban: Debit - Kredit → akan menjadi komponen Net Income
+                    totalExpense = totalExpense.add(debit.subtract(credit));
+                }
                 default -> {
-                    // REVENUE dan EXPENSE tidak ditampilkan di Neraca
+                    // Tipe akun lain diabaikan
                 }
             }
         }
 
+        // Hitung Laba Berjalan (Net Income) = Total Pendapatan - Total Beban
+        BigDecimal netIncome = totalRevenue.subtract(totalExpense);
+
+        // Tambahkan "Laba Berjalan" sebagai baris virtual di blok Ekuitas
+        equityAccounts.add(BalanceSheetDTO.BalanceSheetLineDTO.builder()
+                .accountId(null)
+                .accountCode("")
+                .accountName("Laba Berjalan (Net Income)")
+                .balance(netIncome)
+                .build());
+        totalEquities = totalEquities.add(netIncome);
+
+        // Grand Total: Kewajiban + Ekuitas
+        BigDecimal totalLiabilitiesAndEquities = totalLiabilities.add(totalEquities);
+
         return BalanceSheetDTO.builder()
                 .startDate(startDate)
                 .endDate(endDate)
-                .totalAsset(totalAsset)
-                .totalLiability(totalLiability)
-                .totalEquity(totalEquity)
                 .assetAccounts(assetAccounts)
+                .totalAssets(totalAssets)
                 .liabilityAccounts(liabilityAccounts)
+                .totalLiabilities(totalLiabilities)
                 .equityAccounts(equityAccounts)
+                .totalEquities(totalEquities)
+                .totalLiabilitiesAndEquities(totalLiabilitiesAndEquities)
                 .build();
     }
 

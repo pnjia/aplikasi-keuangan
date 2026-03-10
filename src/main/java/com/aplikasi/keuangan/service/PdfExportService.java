@@ -185,39 +185,95 @@ public class PdfExportService {
         }
     }
 
-    // 5. Balance Sheet
+    // 5. Balance Sheet (Format Berblok Standar Akuntansi)
     public byte[] generateBalanceSheetPdf(BalanceSheetDTO data) {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             Document document = new Document(PageSize.A4);
             PdfWriter.getInstance(document, out);
             document.open();
 
-            Paragraph title = new Paragraph("Laporan Neraca", getTitleFont());
+            Font boldFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+            Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 10);
+
+            Paragraph title = new Paragraph("Laporan Neraca (Balance Sheet)", getTitleFont());
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
             document.add(Chunk.NEWLINE);
 
-            PdfPTable table = new PdfPTable(3);
+            PdfPTable table = new PdfPTable(2);
             table.setWidthPercentage(100);
-            table.addCell("Kategori");
-            table.addCell("Nama Akun");
-            table.addCell("Nilai");
+            table.setWidths(new float[]{70f, 30f});
+
+            // ── BLOK ASET ──
+            com.lowagie.text.pdf.PdfPCell headerAset = new com.lowagie.text.pdf.PdfPCell(new Paragraph("ASET", boldFont));
+            headerAset.setColspan(2);
+            headerAset.setBackgroundColor(new java.awt.Color(220, 230, 241));
+            headerAset.setPadding(6);
+            table.addCell(headerAset);
 
             for (BalanceSheetDTO.BalanceSheetLineDTO line : data.getAssetAccounts()) {
-                table.addCell("ASET");
-                table.addCell(line.getAccountName());
-                table.addCell(CurrencyFormatUtil.toRupiahKompak(line.getBalance()));
+                table.addCell(new Paragraph("   " + line.getAccountName(), normalFont));
+                table.addCell(new Paragraph(CurrencyFormatUtil.toRupiahKompak(line.getBalance()), normalFont));
             }
+
+            com.lowagie.text.pdf.PdfPCell subtotalAset = new com.lowagie.text.pdf.PdfPCell(new Paragraph("Total Aset", boldFont));
+            subtotalAset.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            subtotalAset.setPadding(5);
+            table.addCell(subtotalAset);
+            com.lowagie.text.pdf.PdfPCell valAset = new com.lowagie.text.pdf.PdfPCell(new Paragraph(CurrencyFormatUtil.toRupiahKompak(data.getTotalAssets()), boldFont));
+            valAset.setPadding(5);
+            table.addCell(valAset);
+
+            // ── BLOK KEWAJIBAN ──
+            com.lowagie.text.pdf.PdfPCell headerLiab = new com.lowagie.text.pdf.PdfPCell(new Paragraph("KEWAJIBAN", boldFont));
+            headerLiab.setColspan(2);
+            headerLiab.setBackgroundColor(new java.awt.Color(255, 230, 230));
+            headerLiab.setPadding(6);
+            table.addCell(headerLiab);
+
             for (BalanceSheetDTO.BalanceSheetLineDTO line : data.getLiabilityAccounts()) {
-                table.addCell("LIABILITAS");
-                table.addCell(line.getAccountName());
-                table.addCell(CurrencyFormatUtil.toRupiahKompak(line.getBalance()));
+                table.addCell(new Paragraph("   " + line.getAccountName(), normalFont));
+                table.addCell(new Paragraph(CurrencyFormatUtil.toRupiahKompak(line.getBalance()), normalFont));
             }
+
+            com.lowagie.text.pdf.PdfPCell subtotalLiab = new com.lowagie.text.pdf.PdfPCell(new Paragraph("Total Kewajiban", boldFont));
+            subtotalLiab.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            subtotalLiab.setPadding(5);
+            table.addCell(subtotalLiab);
+            com.lowagie.text.pdf.PdfPCell valLiab = new com.lowagie.text.pdf.PdfPCell(new Paragraph(CurrencyFormatUtil.toRupiahKompak(data.getTotalLiabilities()), boldFont));
+            valLiab.setPadding(5);
+            table.addCell(valLiab);
+
+            // ── BLOK EKUITAS ──
+            com.lowagie.text.pdf.PdfPCell headerEq = new com.lowagie.text.pdf.PdfPCell(new Paragraph("EKUITAS", boldFont));
+            headerEq.setColspan(2);
+            headerEq.setBackgroundColor(new java.awt.Color(230, 255, 230));
+            headerEq.setPadding(6);
+            table.addCell(headerEq);
+
             for (BalanceSheetDTO.BalanceSheetLineDTO line : data.getEquityAccounts()) {
-                table.addCell("EKUITAS");
-                table.addCell(line.getAccountName());
-                table.addCell(CurrencyFormatUtil.toRupiahKompak(line.getBalance()));
+                table.addCell(new Paragraph("   " + line.getAccountName(), normalFont));
+                table.addCell(new Paragraph(CurrencyFormatUtil.toRupiahKompak(line.getBalance()), normalFont));
             }
+
+            com.lowagie.text.pdf.PdfPCell subtotalEq = new com.lowagie.text.pdf.PdfPCell(new Paragraph("Total Ekuitas", boldFont));
+            subtotalEq.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            subtotalEq.setPadding(5);
+            table.addCell(subtotalEq);
+            com.lowagie.text.pdf.PdfPCell valEq = new com.lowagie.text.pdf.PdfPCell(new Paragraph(CurrencyFormatUtil.toRupiahKompak(data.getTotalEquities()), boldFont));
+            valEq.setPadding(5);
+            table.addCell(valEq);
+
+            // ── GRAND TOTAL: KEWAJIBAN + EKUITAS ──
+            com.lowagie.text.pdf.PdfPCell grandLabel = new com.lowagie.text.pdf.PdfPCell(new Paragraph("TOTAL KEWAJIBAN & EKUITAS", boldFont));
+            grandLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            grandLabel.setBackgroundColor(new java.awt.Color(255, 255, 200));
+            grandLabel.setPadding(6);
+            table.addCell(grandLabel);
+            com.lowagie.text.pdf.PdfPCell grandVal = new com.lowagie.text.pdf.PdfPCell(new Paragraph(CurrencyFormatUtil.toRupiahKompak(data.getTotalLiabilitiesAndEquities()), boldFont));
+            grandVal.setBackgroundColor(new java.awt.Color(255, 255, 200));
+            grandVal.setPadding(6);
+            table.addCell(grandVal);
 
             document.add(table);
             document.close();

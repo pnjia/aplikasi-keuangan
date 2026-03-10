@@ -187,51 +187,110 @@ public class ExcelExportService {
         }
     }
 
-    // 5. Balance Sheet
+    // 5. Balance Sheet (Format Berblok Standar Akuntansi)
     public byte[] generateBalanceSheetExcel(BalanceSheetDTO data) {
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             Sheet sheet = workbook.createSheet("Neraca");
 
-            Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("Kategori");
-            headerRow.createCell(1).setCellValue("Kode Akun");
-            headerRow.createCell(2).setCellValue("Nama Akun");
-            headerRow.createCell(3).setCellValue("Nilai");
+            // Style untuk header blok (bold + background)
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font boldFont = workbook.createFont();
+            boldFont.setBold(true);
+            headerStyle.setFont(boldFont);
+            headerStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            // Style untuk subtotal (bold only)
+            CellStyle subtotalStyle = workbook.createCellStyle();
+            subtotalStyle.setFont(boldFont);
+
+            // Style untuk subtotal currency (bold + format Rp)
+            CellStyle subtotalCurrencyStyle = workbook.createCellStyle();
+            subtotalCurrencyStyle.setFont(boldFont);
+            DataFormat fmt = workbook.createDataFormat();
+            subtotalCurrencyStyle.setDataFormat(fmt.getFormat("\"Rp\"#,##0;[Red]\\-\"Rp\"#,##0"));
 
             CellStyle currencyStyle = createCurrencyStyle(workbook);
 
-            int rowIdx = 1;
+            int rowIdx = 0;
+
+            // Judul
+            Row titleRow = sheet.createRow(rowIdx++);
+            Cell titleCell = titleRow.createCell(0);
+            titleCell.setCellValue("Laporan Neraca (Balance Sheet)");
+            titleCell.setCellStyle(subtotalStyle);
+            rowIdx++; // baris kosong
+
+            // ── BLOK ASET ──
+            Row assetHeader = sheet.createRow(rowIdx++);
+            Cell assetHeaderCell = assetHeader.createCell(0);
+            assetHeaderCell.setCellValue("ASET");
+            assetHeaderCell.setCellStyle(headerStyle);
+
             for (BalanceSheetDTO.BalanceSheetLineDTO line : data.getAssetAccounts()) {
                 Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue("ASET");
-                row.createCell(1).setCellValue(line.getAccountCode());
-                row.createCell(2).setCellValue(line.getAccountName());
-                setCurrencyCell(row, 3, line.getBalance(), currencyStyle);
+                row.createCell(0).setCellValue("   " + line.getAccountName());
+                setCurrencyCell(row, 1, line.getBalance(), currencyStyle);
             }
+
+            Row subtotalAsset = sheet.createRow(rowIdx++);
+            Cell lblAsset = subtotalAsset.createCell(0);
+            lblAsset.setCellValue("Total Aset");
+            lblAsset.setCellStyle(subtotalStyle);
+            setCurrencyCell(subtotalAsset, 1, data.getTotalAssets(), subtotalCurrencyStyle);
+
+            rowIdx++; // baris kosong
+
+            // ── BLOK KEWAJIBAN ──
+            Row liabHeader = sheet.createRow(rowIdx++);
+            Cell liabHeaderCell = liabHeader.createCell(0);
+            liabHeaderCell.setCellValue("KEWAJIBAN");
+            liabHeaderCell.setCellStyle(headerStyle);
 
             for (BalanceSheetDTO.BalanceSheetLineDTO line : data.getLiabilityAccounts()) {
                 Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue("LIABILITAS");
-                row.createCell(1).setCellValue(line.getAccountCode());
-                row.createCell(2).setCellValue(line.getAccountName());
-                setCurrencyCell(row, 3, line.getBalance(), currencyStyle);
+                row.createCell(0).setCellValue("   " + line.getAccountName());
+                setCurrencyCell(row, 1, line.getBalance(), currencyStyle);
             }
+
+            Row subtotalLiab = sheet.createRow(rowIdx++);
+            Cell lblLiab = subtotalLiab.createCell(0);
+            lblLiab.setCellValue("Total Kewajiban");
+            lblLiab.setCellStyle(subtotalStyle);
+            setCurrencyCell(subtotalLiab, 1, data.getTotalLiabilities(), subtotalCurrencyStyle);
+
+            rowIdx++; // baris kosong
+
+            // ── BLOK EKUITAS ──
+            Row eqHeader = sheet.createRow(rowIdx++);
+            Cell eqHeaderCell = eqHeader.createCell(0);
+            eqHeaderCell.setCellValue("EKUITAS");
+            eqHeaderCell.setCellStyle(headerStyle);
 
             for (BalanceSheetDTO.BalanceSheetLineDTO line : data.getEquityAccounts()) {
                 Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue("EKUITAS");
-                row.createCell(1).setCellValue(line.getAccountCode());
-                row.createCell(2).setCellValue(line.getAccountName());
-                setCurrencyCell(row, 3, line.getBalance(), currencyStyle);
+                row.createCell(0).setCellValue("   " + line.getAccountName());
+                setCurrencyCell(row, 1, line.getBalance(), currencyStyle);
             }
 
-            Row totalRow = sheet.createRow(rowIdx++);
-            totalRow.createCell(2).setCellValue("TOTAL ASET");
-            setCurrencyCell(totalRow, 3, data.getTotalAsset(), currencyStyle);
+            Row subtotalEq = sheet.createRow(rowIdx++);
+            Cell lblEq = subtotalEq.createCell(0);
+            lblEq.setCellValue("Total Ekuitas");
+            lblEq.setCellStyle(subtotalStyle);
+            setCurrencyCell(subtotalEq, 1, data.getTotalEquities(), subtotalCurrencyStyle);
 
-            Row totalRow2 = sheet.createRow(rowIdx++);
-            totalRow2.createCell(2).setCellValue("TOTAL LIABILITAS + EKUITAS");
-            setCurrencyCell(totalRow2, 3, data.getTotalLiability().add(data.getTotalEquity()), currencyStyle);
+            rowIdx++; // baris kosong
+
+            // ── GRAND TOTAL: KEWAJIBAN + EKUITAS ──
+            Row grandRow = sheet.createRow(rowIdx++);
+            Cell grandLabel = grandRow.createCell(0);
+            grandLabel.setCellValue("TOTAL KEWAJIBAN & EKUITAS");
+            grandLabel.setCellStyle(subtotalStyle);
+            setCurrencyCell(grandRow, 1, data.getTotalLiabilitiesAndEquities(), subtotalCurrencyStyle);
+
+            // Auto-size kolom
+            sheet.autoSizeColumn(0);
+            sheet.autoSizeColumn(1);
 
             workbook.write(out);
             return out.toByteArray();
