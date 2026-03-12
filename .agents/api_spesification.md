@@ -39,3 +39,7 @@ Semua titik akhir di bawah ini wajib menggunakan filter parameter waktu (contoh 
 - `GET /api/v1/reports/profit-and-loss` (Mengambil ringkasan Laba Rugi)
 - `GET /api/v1/reports/balance-sheet` (Mengambil struktur Neraca)
 - `GET /api/v1/reports/cash-flow` (Mengambil Arus Kas, memfilter pergerakan khusus pada akun Kas atau Bank)
+
+## E. Dashboard Aggregation API
+
+- `GET /api/v1/dashboard/summary` (Menyediakan data agregasi untuk halaman dashboard seperti total saldo kas, pendapatan bulanan, pengeluaran bulanan, laba bersih, serta grafik trend pendapatan & pengeluaran bulanan dan expense by category. CompanyId didapatkan dari JWT token pengguna yang login)

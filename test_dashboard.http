@@ -1,0 +1,12 @@
+### Pengujian Titik Akhir API Dashboard Aggregation
+### PENTING:
+###   - Ganti {{token}} dengan token JWT dari hasil login
+
+# 1. Mengambil Dashboard Summary
+# Menyediakan data agregasi (Total Saldo Kas, Pendapatan dan Pengeluaran Bulan Ini, Laba Bersih, 
+# Tren Bulanan 6 Bulan Terakhir, Pengeluaran Berdasarkan Kategori Bulan Ini)
+# Akses: OWNER, ADMIN, KASIR
+GET http://localhost:8080/api/v1/dashboard/summary
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
+
+###
