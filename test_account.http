@@ -6,7 +6,7 @@
 # Akses: OWNER, ADMIN
 POST http://localhost:8080/api/v1/accounts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTg1ODYwLCJleHAiOjE3NzMyNzIyNjB9.w9zbmGjom3tHAA_cYXmsiBiuJjR4KrBUpl5u-ER1lKw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "accountCode": "1-1001",
@@ -20,7 +20,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN
 POST http://localhost:8080/api/v1/accounts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "accountCode": "1-1002",
@@ -34,7 +34,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN
 POST http://localhost:8080/api/v1/accounts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "accountCode": "1-2001",
@@ -48,7 +48,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN
 POST http://localhost:8080/api/v1/accounts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "accountCode": "2-1001",
@@ -62,7 +62,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN
 POST http://localhost:8080/api/v1/accounts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "accountCode": "3-1001",
@@ -76,7 +76,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN
 POST http://localhost:8080/api/v1/accounts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "accountCode": "4-1001",
@@ -90,7 +90,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN
 POST http://localhost:8080/api/v1/accounts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "accountCode": "5-1001",
@@ -103,5 +103,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 8. Melihat Daftar Seluruh Akun Perusahaan
 # Akses: OWNER, ADMIN, KASIR
 GET http://localhost:8080/api/v1/accounts
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMDI3MTkwLCJleHAiOjE3NzMxMTM1OTB9.TLcfDTBEnwtF6QA_3DbnMNs8sS2U-LDm-44hPkdcusA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 

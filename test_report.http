@@ -9,7 +9,7 @@
 # Menampilkan seluruh entri jurnal beserta baris debit/kredit dalam rentang waktu
 # Akses: OWNER, ADMIN
 GET http://localhost:8080/api/v1/reports/general-journal?startDate=2024-01-01&endDate=2026-12-31
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 ###
 
@@ -18,7 +18,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN
 # PENTING: Ganti {{accountId}} dengan UUID akun yang ingin dilihat (misal: akun Kas)
 GET http://localhost:8080/api/v1/reports/general-ledger/f7443618-d1d7-4068-a4e0-10f163e5ea64?startDate=2024-01-01&endDate=2026-12-31
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 ###
 
@@ -26,7 +26,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Menampilkan ringkasan total Debit dan Kredit per akun untuk validasi keseimbangan
 # Akses: OWNER, ADMIN
 GET http://localhost:8080/api/v1/reports/trial-balance?startDate=2024-01-01&endDate=2026-12-31
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 ###
 
@@ -34,7 +34,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Menghitung: Laba Bersih = Total Pendapatan (REVENUE) - Total Beban (EXPENSE)
 # Akses: OWNER, ADMIN
 GET http://localhost:8080/api/v1/reports/profit-and-loss?startDate=2024-01-01&endDate=2026-12-31
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 ###
 
@@ -43,7 +43,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Menampilkan posisi keuangan perusahaan pada periode tertentu
 # Akses: OWNER, ADMIN
 GET http://localhost:8080/api/v1/reports/balance-sheet?startDate=2024-01-01&endDate=2026-12-31
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 ###
 
@@ -52,7 +52,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Menghitung: Net Cash Flow = Total Kas Masuk - Total Kas Keluar
 # Akses: OWNER, ADMIN
 GET http://localhost:8080/api/v1/reports/cash-flow?startDate=2024-01-01&endDate=2026-12-31
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 ###
 
@@ -60,7 +60,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Menghasilkan fail (file) dokumen PDF berisi tabel Laba Rugi
 # Akses: OWNER, ADMIN
 GET http://localhost:8080/api/v1/reports/profit-and-loss?startDate=2024-01-01&endDate=2026-12-31&format=pdf
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 ###
 
@@ -68,4 +68,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Menghasilkan fail (file) lembar kerja XLSX berisi tabel Laba Rugi
 # Akses: OWNER, ADMIN
 GET http://localhost:8080/api/v1/reports/profit-and-loss?startDate=2024-01-01&endDate=2026-12-31&format=excel
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ

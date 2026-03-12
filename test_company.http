@@ -5,7 +5,7 @@
 # Akses: Hanya OWNER
 POST http://localhost:8080/api/v1/companies
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "name": "PT Maju Sejahtera",
@@ -15,8 +15,36 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 
 ###
 
+# 2. Membuat Profil Perusahaan Baru (Cabang Bandung)
+# Akses: Hanya OWNER
+POST http://localhost:8080/api/v1/companies
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
+
+{
+  "name": "CV Berkah Mandiri",
+  "address": "Jl. Braga No. 99, Bandung",
+  "taxNumber": "02.345.678.9-234.000"
+}
+
+###
+
+# 3. Membuat Profil Perusahaan Baru (Cabang Surabaya)
+# Akses: Hanya OWNER
+POST http://localhost:8080/api/v1/companies
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
+
+{
+  "name": "PT Teknologi Nusantara",
+  "address": "Jl. Pemuda No. 45, Surabaya",
+  "taxNumber": "03.456.789.0-345.000"
+}
+
+###
+
 # 2. Melihat Daftar Perusahaan Pengguna
 # Akses: OWNER, ADMIN, KASIR
 GET http://localhost:8080/api/v1/companies
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 

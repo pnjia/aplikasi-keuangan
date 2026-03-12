@@ -10,10 +10,10 @@
 # CATATAN: contactId harus diambil dari response GET /api/v1/contacts
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
-  "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
+  "contactId": "5aac0ee6-8457-4848-a813-d8488540fc7d",
   "invoiceNumber": "INV-2024-001",
   "issueDate": "2024-03-01T00:00:00Z",
   "dueDate": "2024-03-31T00:00:00Z",
@@ -43,10 +43,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN, KASIR
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
-  "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
+  "contactId": "cff80f2b-bf19-46b7-b27b-6b5fabec40d8",
   "invoiceNumber": "INV-2024-002",
   "issueDate": "2024-03-05T00:00:00Z",
   "dueDate": "2024-04-05T00:00:00Z",
@@ -66,7 +66,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Akses: OWNER, ADMIN, KASIR
 # Gunakan query param page dan size untuk kontrol paginasi
 GET http://localhost:8080/api/v1/invoices?page=0&size=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 ###
 
@@ -76,9 +76,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 #   - Ganti {{invoiceId}} dengan UUID invoice dari response POST di atas
 #   - Ganti {{accountId}} dengan UUID akun Kas atau Bank dari response GET /api/v1/accounts
 #   - Endpoint ini akan OTOMATIS membuat jurnal ganda (double-entry) di database
-PUT http://localhost:8080/api/v1/invoices/1f86e5f0-6b17-48bb-827b-a93179ff7a27/pay
+PUT http://localhost:8080/api/v1/invoices/5a8e9d1d-b991-45ce-a633-a882515bef56/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "amount": 23000000.0000,
@@ -95,10 +95,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Kontak: CV Pelanggan Setia
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
-  "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
+  "contactId": "cff80f2b-bf19-46b7-b27b-6b5fabec40d8",
   "invoiceNumber": "INV-2024-003",
   "issueDate": "2024-04-01T00:00:00Z",
   "dueDate": "2024-04-30T00:00:00Z",
@@ -123,10 +123,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Kontak: PT Supplier Utama
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
-  "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
+  "contactId": "5aac0ee6-8457-4848-a813-d8488540fc7d",
   "invoiceNumber": "INV-2024-004",
   "issueDate": "2024-04-10T00:00:00Z",
   "dueDate": "2024-05-10T00:00:00Z",
@@ -146,10 +146,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # Kontak: CV Pelanggan Setia
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
-  "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
+  "contactId": "cff80f2b-bf19-46b7-b27b-6b5fabec40d8",
   "invoiceNumber": "INV-2024-005",
   "issueDate": "2024-05-01T00:00:00Z",
   "dueDate": "2024-06-01T00:00:00Z",
@@ -188,7 +188,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # GANTI invoiceId di bawah dengan ID dari response nomor 5!
 PUT http://localhost:8080/api/v1/invoices/df8ff68f-ccf0-4981-a6ff-0f86194ae453/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "amount": 10000000.0000,
@@ -201,7 +201,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # GANTI invoiceId di bawah dengan ID dari response nomor 6!
 PUT http://localhost:8080/api/v1/invoices/2bdd26a4-3bdc-4ca5-bd35-e56fda3226c2/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "amount": 12000000.0000,
@@ -220,10 +220,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 10. Invoice Konsultasi (Dari CUSTOMER) -> PENDAPATAN
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
-  "contactId": "61e48839-bd9b-4ab1-ba4a-4b592025b076",
+  "contactId": "cff80f2b-bf19-46b7-b27b-6b5fabec40d8",
   "invoiceNumber": "INV-2024-006",
   "issueDate": "2024-06-01T00:00:00Z",
   "dueDate": "2024-06-30T00:00:00Z",
@@ -242,10 +242,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 11. Invoice Lisensi (Kepada VENDOR) -> BEBAN
 POST http://localhost:8080/api/v1/invoices
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
-  "contactId": "44b44474-2e0f-4d54-9a44-849b61e98490",
+  "contactId": "5aac0ee6-8457-4848-a813-d8488540fc7d",
   "invoiceNumber": "BILL-2024-001",
   "issueDate": "2024-06-05T00:00:00Z",
   "dueDate": "2024-06-20T00:00:00Z",
@@ -264,7 +264,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 12. Bayar Invoice PENDAPATAN (Ganti {{id}} dengan ID nomor 10!)
 PUT http://localhost:8080/api/v1/invoices/bb799375-3ece-45ba-a69f-65e76de238f6/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "amount": 45000000.0000,
@@ -276,7 +276,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwia
 # 13. Bayar Invoice BEBAN (Ganti {{id}} dengan ID nomor 11!)
 PUT http://localhost:8080/api/v1/invoices/dbc48451-9b97-4661-9146-42b826021736/pay
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTIyMDYwLCJleHAiOjE3NzMyMDg0NjB9.hn2FWY6CQ5gMYUlAwXJROVYbSWwjYzflfD5Y6Tew91o
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
 {
   "amount": 7500000.0000,

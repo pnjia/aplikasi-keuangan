@@ -5,8 +5,8 @@ POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "fullName": "Jikasa",
-  "email": "jikasa@gmail.com",
+  "fullName": "Panji Angkasa",
+  "email": "panjangkasa@gmail.com",
   "password": "123123"
 }
 
@@ -17,7 +17,7 @@ POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email": "jikasa@gmail.com",
+  "email": "panjangkasa@gmail.com",
   "password": "123123"
 }
 
@@ -25,4 +25,4 @@ Content-Type: application/json
 
 # 3. Keluar Pengguna (Logout)
 POST http://localhost:8080/api/v1/auth/logout
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWthc2FAZ21haWwuY29tIiwiaWF0IjoxNzczMTg1ODYwLCJleHAiOjE3NzMyNzIyNjB9.w9zbmGjom3tHAA_cYXmsiBiuJjR4KrBUpl5u-ER1lKw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
