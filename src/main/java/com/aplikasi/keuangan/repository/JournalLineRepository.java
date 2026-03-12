@@ -93,4 +93,82 @@ public interface JournalLineRepository extends JpaRepository<JournalLine, UUID> 
             @Param("companyId") UUID companyId,
             @Param("startDate") Instant startDate,
             @Param("endDate") Instant endDate);
+
+    // ──────────────────────────────────────────────
+    // Native Query: Dashboard Summary Aggregation
+    // ──────────────────────────────────────────────
+
+    @Query(nativeQuery = true, value =
+            "SELECT COALESCE(SUM(jl.debit_amount) - SUM(jl.credit_amount), 0) " +
+            "FROM journal_lines jl " +
+            "JOIN journal_entries je ON jl.journal_entry_id = je.id " +
+            "JOIN accounts a ON jl.account_id = a.id " +
+            "WHERE je.company_id = :companyId " +
+            "  AND je.deleted_at IS NULL " +
+            "  AND a.account_type = 'ASSET' " +
+            "  AND (LOWER(a.account_name) LIKE '%kas%' OR LOWER(a.account_name) LIKE '%bank%')")
+    java.math.BigDecimal getCashBalance(@Param("companyId") UUID companyId);
+
+    @Query(nativeQuery = true, value =
+            "SELECT COALESCE(SUM(jl.credit_amount) - SUM(jl.debit_amount), 0) " +
+            "FROM journal_lines jl " +
+            "JOIN journal_entries je ON jl.journal_entry_id = je.id " +
+            "JOIN accounts a ON jl.account_id = a.id " +
+            "WHERE je.company_id = :companyId " +
+            "  AND je.deleted_at IS NULL " +
+            "  AND a.account_type = 'REVENUE' " +
+            "  AND je.transaction_date BETWEEN :startDate AND :endDate")
+    java.math.BigDecimal getCurrentMonthRevenue(
+            @Param("companyId") UUID companyId,
+            @Param("startDate") Instant startDate,
+            @Param("endDate") Instant endDate);
+
+    @Query(nativeQuery = true, value =
+            "SELECT COALESCE(SUM(jl.debit_amount) - SUM(jl.credit_amount), 0) " +
+            "FROM journal_lines jl " +
+            "JOIN journal_entries je ON jl.journal_entry_id = je.id " +
+            "JOIN accounts a ON jl.account_id = a.id " +
+            "WHERE je.company_id = :companyId " +
+            "  AND je.deleted_at IS NULL " +
+            "  AND a.account_type = 'EXPENSE' " +
+            "  AND je.transaction_date BETWEEN :startDate AND :endDate")
+    java.math.BigDecimal getCurrentMonthExpense(
+            @Param("companyId") UUID companyId,
+            @Param("startDate") Instant startDate,
+            @Param("endDate") Instant endDate);
+
+    @Query(nativeQuery = true, value =
+            "SELECT a.account_name AS categoryName, " +
+            "       COALESCE(SUM(jl.debit_amount) - SUM(jl.credit_amount), 0) AS value " +
+            "FROM journal_lines jl " +
+            "JOIN journal_entries je ON jl.journal_entry_id = je.id " +
+            "JOIN accounts a ON jl.account_id = a.id " +
+            "WHERE je.company_id = :companyId " +
+            "  AND je.deleted_at IS NULL " +
+            "  AND a.account_type = 'EXPENSE' " +
+            "  AND je.transaction_date BETWEEN :startDate AND :endDate " +
+            "GROUP BY a.account_name " +
+            "ORDER BY value DESC")
+    List<Object[]> getExpenseByCategory(
+            @Param("companyId") UUID companyId,
+            @Param("startDate") Instant startDate,
+            @Param("endDate") Instant endDate);
+
+    @Query(nativeQuery = true, value =
+            "SELECT TO_CHAR(je.transaction_date, 'YYYY-MM') AS month, " +
+            "       COALESCE(SUM(CASE WHEN a.account_type = 'REVENUE' THEN jl.credit_amount - jl.debit_amount ELSE 0 END), 0) AS revenue, " +
+            "       COALESCE(SUM(CASE WHEN a.account_type = 'EXPENSE' THEN jl.debit_amount - jl.credit_amount ELSE 0 END), 0) AS expense " +
+            "FROM journal_lines jl " +
+            "JOIN journal_entries je ON jl.journal_entry_id = je.id " +
+            "JOIN accounts a ON jl.account_id = a.id " +
+            "WHERE je.company_id = :companyId " +
+            "  AND je.deleted_at IS NULL " +
+            "  AND a.account_type IN ('REVENUE', 'EXPENSE') " +
+            "  AND je.transaction_date BETWEEN :startDate AND :endDate " +
+            "GROUP BY TO_CHAR(je.transaction_date, 'YYYY-MM') " +
+            "ORDER BY month ASC")
+    List<Object[]> getMonthlyTrend(
+            @Param("companyId") UUID companyId,
+            @Param("startDate") Instant startDate,
+            @Param("endDate") Instant endDate);
 }
