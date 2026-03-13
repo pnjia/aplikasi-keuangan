@@ -89,6 +89,12 @@ public class InvoiceService {
                 .map(this::mapToResponse);
     }
 
+    @Transactional(readOnly = true)
+    public Page<InvoiceResponseDTO> getInvoicesByCompanyIdAndContactId(UUID companyId, UUID contactId, Pageable pageable) {
+        return invoiceRepository.findByCompanyIdAndContactIdAndDeletedAtIsNull(companyId, contactId, pageable)
+                .map(this::mapToResponse);
+    }
+
     // ──────────────────────────────────────────────
     // 3. ATURAN MUTLAK: Proses Pembayaran Tagihan
     //    dengan Jurnal Ganda (Double Entry)

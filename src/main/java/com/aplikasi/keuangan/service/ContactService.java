@@ -4,6 +4,7 @@ import com.aplikasi.keuangan.dto.ContactRequestDTO;
 import com.aplikasi.keuangan.dto.ContactResponseDTO;
 import com.aplikasi.keuangan.entity.Contact;
 import com.aplikasi.keuangan.repository.ContactRepository;
+import com.aplikasi.keuangan.repository.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class ContactService {
     
     private final ContactRepository contactRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @Transactional
     public ContactResponseDTO createContact(ContactRequestDTO request) {
@@ -40,10 +42,25 @@ public class ContactService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public ContactResponseDTO getContactById(UUID id, UUID companyId) {
+        Contact contact = contactRepository.findByIdAndCompanyId(id, companyId)
+                .orElseThrow(() -> new RuntimeException("Contact not found or does not belong to this company"));
+        return mapToResponse(contact);
+    }
+
     @Transactional
-    public void deleteContact(UUID id) {
-        Contact contact = contactRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Contact not found"));
+    public void deleteContact(UUID id, UUID companyId) {
+        // Validasi bahwa kontak ada dan milik company ini
+        Contact contact = contactRepository.findByIdAndCompanyId(id, companyId)
+                .orElseThrow(() -> new RuntimeException("Contact not found or does not belong to this company"));
+
+        // Cek integritas data: apakah sudah ada invoice untuk kontak ini?
+        if (invoiceRepository.existsByContactIdAndDeletedAtIsNull(id)) {
+            throw new RuntimeException("Kontak tidak dapat dihapus karena sudah memiliki riwayat transaksi/tagihan.");
+        }
+
+        // Soft delete: set deletedAt timestamp
         contact.setDeletedAt(Instant.now());
         contactRepository.save(contact);
     }

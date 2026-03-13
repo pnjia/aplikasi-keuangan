@@ -12,13 +12,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -54,5 +58,26 @@ public class ContactController {
     public ResponseEntity<List<ContactResponseDTO>> getContacts() {
         UUID companyId = getCompanyIdFromCurrentUser();
         return ResponseEntity.ok(contactService.getContactsByCompanyId(companyId));
+    }
+
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN', 'KASIR')")
+    @GetMapping("/{id}")
+    public ResponseEntity<ContactResponseDTO> getContactDetail(@PathVariable UUID id) {
+        UUID companyId = getCompanyIdFromCurrentUser();
+        ContactResponseDTO response = contactService.getContactById(id, companyId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN', 'KASIR')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> deleteContact(@PathVariable UUID id) {
+        UUID companyId = getCompanyIdFromCurrentUser();
+        contactService.deleteContact(id, companyId);
+        
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Kontak berhasil dihapus");
+        response.put("status", "success");
+        
+        return ResponseEntity.ok(response);
     }
 }

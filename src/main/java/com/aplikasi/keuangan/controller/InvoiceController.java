@@ -75,10 +75,16 @@ public class InvoiceController {
     @GetMapping
     public ResponseEntity<Page<InvoiceResponseDTO>> getInvoices(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) UUID contactId) {
         UUID companyId = getCompanyIdFromCurrentUser();
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        return ResponseEntity.ok(invoiceService.getInvoicesByCompanyId(companyId, pageable));
+        
+        if (contactId != null) {
+            return ResponseEntity.ok(invoiceService.getInvoicesByCompanyIdAndContactId(companyId, contactId, pageable));
+        } else {
+            return ResponseEntity.ok(invoiceService.getInvoicesByCompanyId(companyId, pageable));
+        }
     }
 
     // ──────────────────────────────────────────────

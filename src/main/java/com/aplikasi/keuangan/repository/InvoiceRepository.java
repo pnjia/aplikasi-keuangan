@@ -9,4 +9,6 @@ import java.util.UUID;
 
 public interface InvoiceRepository extends JpaRepository<Invoice, UUID> {
     Page<Invoice> findByCompanyIdAndDeletedAtIsNull(UUID companyId, Pageable pageable);
+    Page<Invoice> findByCompanyIdAndContactIdAndDeletedAtIsNull(UUID companyId, UUID contactId, Pageable pageable);
+    boolean existsByContactIdAndDeletedAtIsNull(UUID contactId);
 }
