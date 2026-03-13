@@ -105,3 +105,45 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb
 GET http://localhost:8080/api/v1/accounts
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
 
+###
+
+# 9. Hapus Akun (Account Deletion with Data Integrity Validation)
+# Akses: OWNER, ADMIN
+# VALIDASI KRITIS:
+#   - Jika akun sudah digunakan dalam journal_lines (ada riwayat transaksi), TOLAK penghapusan
+#   - Jika akun bersih, hapus secara permanen dari database
+# RESPON ERROR (jika ada transaksi):
+#   - Status: 400 Bad Request
+#   - Message: "Akun tidak dapat dihapus karena sudah memiliki riwayat transaksi. Silakan nonaktifkan akun ini jika sudah tidak digunakan."
+# Parameter: {{accountId}} - UUID dari akun yang ingin dihapus
+DELETE http://localhost:8080/api/v1/accounts/{{accountId}}
+Authorization: Bearer {{token}}
+
+###
+
+# 10. Ubah Status Akun ke Nonaktif (Soft-Disable - Alternative to Deletion)
+# Akses: OWNER, ADMIN
+# PURPOSE: Untuk akun yang sudah punya transaksi tapi ingin disembunyikan dari dropdown input
+# Akun nonaktif (isActive = false) tetap tersimpan di database dan visible di laporan, tapi tidak muncul di input dropdown
+# Parameter: {{accountId}} - UUID dari akun yang ingin diubah statusnya
+# Request Body: {"isActive": false}
+PATCH http://localhost:8080/api/v1/accounts/{{accountId}}/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "isActive": false
+}
+
+###
+
+# 11. Ubah Status Akun ke Aktif Kembali (Re-activate Account)
+# Akses: OWNER, ADMIN
+# Parameter: {{accountId}} - UUID dari akun yang ingin diaktifkan kembali
+PATCH http://localhost:8080/api/v1/accounts/{{accountId}}/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "isActive": true
+}

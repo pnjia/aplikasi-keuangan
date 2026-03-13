@@ -46,5 +46,65 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb
 # 2. Melihat Daftar Perusahaan Pengguna
 # Akses: OWNER, ADMIN, KASIR
 GET http://localhost:8080/api/v1/companies
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXJpc0BnbWFpbC5jb20iLCJpYXQiOjE3NzMzOTA3NDUsImV4cCI6MTc3MzQ3NzE0NX0.dEwapabT5qhW73qxZN9nvUHZSxY2XqeVs_nMNieP6kw
+###
 
+# 3. Melihat Daftar Anggota Tim / Karyawan (Manajemen Tim)
+# Akses: OWNER, ADMIN, KASIR
+# PENTING: Endpoint ini mengembalikan daftar pengguna yang memiliki relasi dengan perusahaan pengguna yang login
+# Security: CompanyId diambil otomatis dari JWT - tidak bisa melihat tim perusahaan lain
+# Response mencakup: userId, fullName, email, roleName (OWNER/ADMIN/KASIR)
+GET http://localhost:8080/api/v1/companies/team
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXJpc0BnbWFpbC5jb20iLCJpYXQiOjE3NzMzODYyMjMsImV4cCI6MTc3MzQ3MjYyM30.acwdd8n6QjhI99R9h6oRVDNMaIEBLFO94X32rui8bhI
+
+###
+
+# 4. Tambah Anggota Tim Baru (Add New Team Member)
+# Akses: OWNER, ADMIN saja
+# Endpoint ini akan:
+#   - Buat user baru jika email belum terdaftar (password otomatis di-encode)
+#   - Pakai user existing jika email sudah terdaftar
+#   - Tolak jika user sudah menjadi anggota tim perusahaan aktif
+POST http://localhost:8080/api/v1/companies/team
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXJpc0BnbWFpbC5jb20iLCJpYXQiOjE3NzMzODYyMjMsImV4cCI6MTc3MzQ3MjYyM30.acwdd8n6QjhI99R9h6oRVDNMaIEBLFO94X32rui8bhI
+Content-Type: application/json
+
+{
+  "fullName": "Andi Pratama",
+  "email": "andi.pratama@example.com",
+  "password": "Andi@12345",
+  "roleName": "KASIR"
+}
+
+###
+
+# 5. Edit Anggota Tim - Ubah Peran & Status Aktif (Manajemen Tim Lanjutan - Modal Edit Unified)
+# Akses: OWNER, ADMIN saja
+# PENTING: Endpoint ini sekarang menggunakan rute PUT /api/v1/companies/team/{userId} (SIMPLIFIED)
+# Frontend sekarang menggunakan single modal untuk edit role DAN status aktif sekaligus
+# Security: CompanyId diambil otomatis dari JWT - pengguna hanya bisa mengedit anggota dalam perusahaan mereka sendiri
+# Validasi: 
+#   - Tidak bisa menurunkan OWNER jika dia adalah satu-satunya OWNER
+#   - Tidak bisa menonaktifkan (isActive=false) OWNER jika dia adalah satu-satunya OWNER
+# Parameter: {{userId}} - UUID dari anggota yang ingin diedit
+# Request Body: {"roleName": "ADMIN", "isActive": true}
+PUT http://localhost:8080/api/v1/companies/team/{{userId}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXJpc0BnbWFpbC5jb20iLCJpYXQiOjE3NzMzODYyMjMsImV4cCI6MTc3MzQ3MjYyM30.acwdd8n6QjhI99R9h6oRVDNMaIEBLFO94X32rui8bhI
+Content-Type: application/json
+
+{
+  "roleName": "ADMIN",
+  "isActive": true
+}
+
+###
+
+# 6. Mengeluarkan Anggota Tim dari Perusahaan (Manajemen Tim Lanjutan)
+# Akses: OWNER, ADMIN saja
+# PENTING: Endpoint ini menghapus (soft delete) seorang anggota tim dari perusahaan
+# Security: CompanyId diambil otomatis dari JWT - pengguna hanya bisa mengeluarkan anggota dari perusahaan mereka sendiri
+# Validasi: Tidak bisa mengeluarkan OWNER jika dia adalah satu-satunya OWNER di perusahaan
+# Parameter: {{userId}} - UUID dari anggota yang ingin dikeluarkan
+# Soft Delete: Anggota tim tidak benar-benar dihapus, hanya di-mark dengan deletedAt timestamp untuk audit trail
+DELETE http://localhost:8080/api/v1/companies/team/{{userId}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXJpc0BnbWFpbC5jb20iLCJpYXQiOjE3NzMzODYyMjMsImV4cCI6MTc3MzQ3MjYyM30.acwdd8n6QjhI99R9h6oRVDNMaIEBLFO94X32rui8bhI

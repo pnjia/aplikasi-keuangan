@@ -36,3 +36,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb
 # Akses: OWNER, ADMIN, KASIR
 GET http://localhost:8080/api/v1/contacts
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
+
+###
+
+# 4. Melihat Detail Kontak Spesifik (Untuk Contact Detail Drawer)
+# Akses: OWNER, ADMIN, KASIR
+# PENTING: Ganti {{contactId}} dengan UUID kontak dari response request #1 atau #2
+# Security: endpoint ini memvalidasi bahwa kontak milik perusahaan user yang login
+GET http://localhost:8080/api/v1/contacts/5aac0ee6-8457-4848-a813-d8488540fc7d
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
+
+###
+
+# 5. Menghapus Kontak (Delete Kontak)
+# Akses: OWNER, ADMIN, KASIR
+# PENTING: 
+#   - Ganti {{contactId}} dengan UUID kontak yang ingin dihapus
+#   - Penghapusan akan ditolak (400 Bad Request) jika kontak sudah memiliki invoice/tagihan
+#   - Jika berhasil: soft delete (data di-mark dengan deletedAt, bukan hard delete)
+# TESTING SCENARIOS:
+#   - Scenario 1: Hapus kontak baru yang belum punya invoice → SUCCESS (200)
+#   - Scenario 2: Hapus kontak yang sudah punya invoice → FAILED (400 with validation error)
+DELETE http://localhost:8080/api/v1/contacts/5aac0ee6-8457-4848-a813-d8488540fc7d
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW5qYW5na2FzYUBnbWFpbC5jb20iLCJpYXQiOjE3NzMyOTY0OTQsImV4cCI6MTc3MzM4Mjg5NH0.w7nD0k8LFevj1IJ1GHR3eHXca1fWQ5yQNjjkk8XXDDQ
