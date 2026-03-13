@@ -38,4 +38,8 @@ public class CompanyRole extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", nullable = false)
     private RoleName roleName;
+
+    @Builder.Default
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
 }
