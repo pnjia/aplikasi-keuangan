@@ -77,7 +77,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         User user = userOptional.get();
 
                         // Ambil semua peran pengguna dari tabel company_roles
-                        List<CompanyRole> roles = companyRoleRepository.findByUserId(user.getId());
+                        // Jika terjadi gangguan query (misalnya schema mismatch sementara),
+                        // jangan matikan seluruh konteks keamanan.
+                        List<CompanyRole> roles = new ArrayList<>();
+                        try {
+                            roles = companyRoleRepository.findByUserId(user.getId());
+                        } catch (Exception roleLoadException) {
+                            log.error("Gagal mengambil role user {}: {}", email, roleLoadException.getMessage());
+                        }
 
                         // Konversi peran menjadi GrantedAuthority untuk @PreAuthorize
                         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
