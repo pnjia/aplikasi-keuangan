@@ -4,6 +4,7 @@ import com.aplikasi.keuangan.dto.AccountRequestDTO;
 import com.aplikasi.keuangan.dto.AccountResponseDTO;
 import com.aplikasi.keuangan.entity.Account;
 import com.aplikasi.keuangan.repository.AccountRepository;
+import com.aplikasi.keuangan.repository.JournalLineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final JournalLineRepository journalLineRepository;
 
     @Transactional
     public AccountResponseDTO createAccount(AccountRequestDTO request) {
@@ -47,10 +49,38 @@ public class AccountService {
     }
 
     @Transactional
-    public void deleteAccount(UUID id) {
+    public void deleteAccount(UUID id, UUID companyId) {
+        // Retrieve account with company validation
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
-        account.setDeletedAt(Instant.now());
+
+        // Verify account belongs to the requesting company (multi-tenant security)
+        if (!account.getCompanyId().equals(companyId)) {
+            throw new RuntimeException("Account does not belong to this company");
+        }
+
+        // CRITICAL VALIDATION: Check if account has transaction history
+        if (journalLineRepository.existsByAccountId(id)) {
+            throw new RuntimeException("Akun tidak dapat dihapus karena sudah memiliki riwayat transaksi. Silakan nonaktifkan akun ini jika sudah tidak digunakan.");
+        }
+
+        // Account is clean - proceed with permanent deletion
+        accountRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateAccountStatus(UUID id, UUID companyId, Boolean isActive) {
+        // Retrieve account with company validation
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+
+        // Verify account belongs to the requesting company (multi-tenant security)
+        if (!account.getCompanyId().equals(companyId)) {
+            throw new RuntimeException("Account does not belong to this company");
+        }
+
+        // Update isActive status (soft-disable for accounts with transaction history)
+        account.setIsActive(isActive);
         accountRepository.save(account);
     }
 

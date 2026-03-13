@@ -14,11 +14,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.UUID;
 
 @RestController
@@ -54,5 +59,53 @@ public class AccountController {
     public ResponseEntity<List<AccountResponseDTO>> getAccounts() {
         UUID companyId = getCompanyIdFromCurrentUser();
         return ResponseEntity.ok(accountService.getAccountsByCompanyId(companyId));
+    }
+
+    // ──────────────────────────────────────────────
+    // DELETE /api/v1/accounts/{id} — Hapus Akun
+    // ──────────────────────────────────────────────
+    
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAccount(@PathVariable UUID id) {
+        UUID companyId = getCompanyIdFromCurrentUser();
+        try {
+            accountService.deleteAccount(id, companyId);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Akun berhasil dihapus");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
+    // ──────────────────────────────────────────────
+    // PATCH /api/v1/accounts/{id}/status — Ubah Status Aktif/Nonaktif (Soft-Disable)
+    // ──────────────────────────────────────────────
+    
+    @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN')")
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<?> updateAccountStatus(@PathVariable UUID id, @RequestBody Map<String, Boolean> request) {
+        UUID companyId = getCompanyIdFromCurrentUser();
+        Boolean isActive = request.get("isActive");
+        
+        if (isActive == null) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Field 'isActive' is required");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+        
+        try {
+            accountService.updateAccountStatus(id, companyId, isActive);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", isActive ? "Akun diaktifkan" : "Akun dinonaktifkan");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
     }
 }

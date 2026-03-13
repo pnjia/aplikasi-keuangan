@@ -15,6 +15,10 @@ public interface JournalLineRepository extends JpaRepository<JournalLine, UUID> 
 
     List<JournalLine> findByAccountId(UUID accountId);
 
+    // Validation query: Check if account has transaction history
+    // Used before deleting an account to ensure data integrity
+    boolean existsByAccountId(UUID accountId);
+
     // ──────────────────────────────────────────────
     // Native Query: Agregasi SUM Debit & Kredit
     // dikelompokkan berdasarkan account_id dan account_type
