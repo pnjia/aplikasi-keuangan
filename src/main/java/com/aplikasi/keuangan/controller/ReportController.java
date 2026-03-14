@@ -78,9 +78,9 @@ public class ReportController {
     @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN')")
     @GetMapping("/general-journal")
     public ResponseEntity<?> getGeneralJournal(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) String format) {
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name = "format", required = false) String format) {
 
         UUID companyId = getCompanyIdFromCurrentUser();
         JournalReportDTO data = reportService.getGeneralJournal(companyId, toStartOfDay(startDate), toEndOfDay(endDate));
@@ -110,9 +110,9 @@ public class ReportController {
     @GetMapping("/general-ledger/{accountId}")
     public ResponseEntity<?> getGeneralLedger(
             @PathVariable UUID accountId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) String format) {
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name = "format", required = false) String format) {
 
         UUID companyId = getCompanyIdFromCurrentUser();
         LedgerReportDTO data = reportService.getGeneralLedger(companyId, accountId, toStartOfDay(startDate), toEndOfDay(endDate));
@@ -141,9 +141,9 @@ public class ReportController {
     @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN')")
     @GetMapping("/trial-balance")
     public ResponseEntity<?> getTrialBalance(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) String format) {
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name = "format", required = false) String format) {
 
         UUID companyId = getCompanyIdFromCurrentUser();
         TrialBalanceDTO data = reportService.getTrialBalance(companyId, toStartOfDay(startDate), toEndOfDay(endDate));
@@ -172,9 +172,9 @@ public class ReportController {
     @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN')")
     @GetMapping("/profit-and-loss")
     public ResponseEntity<?> getProfitAndLoss(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) String format) {
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name = "format", required = false) String format) {
 
         UUID companyId = getCompanyIdFromCurrentUser();
         ProfitAndLossDTO data = reportService.getProfitAndLoss(companyId, toStartOfDay(startDate), toEndOfDay(endDate));
@@ -203,9 +203,9 @@ public class ReportController {
     @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN')")
     @GetMapping("/balance-sheet")
     public ResponseEntity<?> getBalanceSheet(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) String format) {
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name = "format", required = false) String format) {
 
         UUID companyId = getCompanyIdFromCurrentUser();
         BalanceSheetDTO data = reportService.getBalanceSheet(companyId, toStartOfDay(startDate), toEndOfDay(endDate));
@@ -234,9 +234,9 @@ public class ReportController {
     @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN')")
     @GetMapping("/cash-flow")
     public ResponseEntity<?> getCashFlow(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) String format) {
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name = "format", required = false) String format) {
 
         UUID companyId = getCompanyIdFromCurrentUser();
         CashFlowDTO data = reportService.getCashFlow(companyId, toStartOfDay(startDate), toEndOfDay(endDate));

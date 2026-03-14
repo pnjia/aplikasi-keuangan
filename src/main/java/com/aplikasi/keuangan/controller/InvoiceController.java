@@ -74,9 +74,9 @@ public class InvoiceController {
     @PreAuthorize("hasAnyAuthority('OWNER', 'ADMIN', 'KASIR')")
     @GetMapping
     public ResponseEntity<Page<InvoiceResponseDTO>> getInvoices(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) UUID contactId) {
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "contactId", required = false) UUID contactId) {
         UUID companyId = getCompanyIdFromCurrentUser();
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         
