@@ -40,6 +40,10 @@ public class Contact extends BaseEntity {
     private String name;
 
     private String phone;
-    
+
     private String email;
+
+    @Builder.Default
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
 }
